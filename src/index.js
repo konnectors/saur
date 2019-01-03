@@ -55,8 +55,8 @@ function authenticate(username, password) {
   return signin({
     url: 'https://mon-espace.saurclient.fr/Authentification/LoginPage.aspx',
     formSelector: 'form',
-    formData: { 
-	ctl00$Content$Login$email: username, 
+    formData: {
+	ctl00$Content$Login$email: username,
 	ctl00$Content$Login$pwd: password,
 	ctl00$Content$Login$btnConnect: 'Valider'},
     // the validate function will check if the login request was a success. Every website has
@@ -87,10 +87,10 @@ function parseDocuments($) {
   sDate =  $('div.flexrow').find($('div.control')).eq(2).text().trim();
   sLien = baseUrl + '/' +  $('#Content_rptDerniereFacture_HyperLink1_0').attr('href');
 
-//  log('info','Facture en cours ' + sNumFacture); 
-//  log('info','Facture en cours ' + normalizePrice(sMontant)); 
-//  log('info','Facture en cours ' + sDate); 
-//  log('info','Facture en cours ' + sLien); 
+//  log('info','Facture en cours ' + sNumFacture);
+//  log('info','Facture en cours ' + normalizePrice(sMontant));
+//  log('info','Facture en cours ' + sDate);
+//  log('info','Facture en cours ' + sLien);
   var docs =[];
   docs = scrape(
     $,
