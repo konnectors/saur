@@ -120,7 +120,9 @@ function parseDocuments($) {
   return docs.map(doc => ({
     ...doc,
     fileurl: doc.fileurl,
-    filename: doc.billNumber + '.pdf',
+    filename: `${formatDate(normalizeDate(doc.date))}_saur_${parseFloat(doc.amount).toFixed(2)}€_`
+      + `${doc.billNumber}`
+      + '.pdf',
     // the saveBills function needs a date field
     date: normalizeDate(doc.date),
     currency: '€',
@@ -144,9 +146,24 @@ function normalizePrice(price) {
   price = price.trim();
   return parseFloat(price)
 }
+
 // "Parse" the date found in the bill page and return a JavaScript Date object.
 function normalizeDate(date) {
+  const [day, month, year] = date.split('/')
+  return new Date(`${year}-${month}-${day}`)
+}
 
- const [day, month, year] = date.split('/')
- return new Date(`${year}-${month}-${day}`)
+// Convert a Date object to a ISO date string
+function formatDate(date) {
+  console.log(date)
+  let year = date.getFullYear()
+  let month = date.getMonth() + 1
+  let day = date.getDate()
+  if (month < 10) {
+    month = '0' + month
+  }
+  if (day < 10) {
+    day = '0' + day
+  }
+  return `${year}-${month}-${day}`
 }
