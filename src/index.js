@@ -27,7 +27,6 @@ module.exports = new BaseKonnector(start)
 // information (fields). When you run this connector yourself in "standalone" mode or "dev" mode,
 // the account information come from ./konnector-dev-config.json file
 async function start(fields) {
-
   log('info', 'Authenticating ...')
   await authenticate(fields.login, fields.password)
   log('info', 'Successfully logged in')
@@ -56,21 +55,25 @@ function authenticate(username, password) {
     url: 'https://mon-espace.saurclient.fr/Authentification/LoginPage.aspx',
     formSelector: 'form',
     formData: {
-	ctl00$Content$Login$email: username,
-	ctl00$Content$Login$pwd: password,
-	ctl00$Content$Login$btnConnect: 'Valider'},
+      ctl00$Content$Login$email: username,
+      ctl00$Content$Login$pwd: password,
+      ctl00$Content$Login$btnConnect: 'Valider'
+    },
     // the validate function will check if the login request was a success. Every website has
     // different ways respond: http status code, error message in html ($), http redirection
     // (fullResponse.request.uri.href)...
-    validate: (statusCode, $, fullResponse) => {
-
+    validate: (statusCode, $) => {
       // The login in toscrape.com always works excepted when no password is set
-      if ($(`a[href='javascript:__doPostBack(\'ctl00$Menu$lkbDeconnecterClient\',\'\')']`).length >= 1) {
+      if (
+        $(
+          `a[href='javascript:__doPostBack('ctl00$Menu$lkbDeconnecterClient','')']`
+        ).length >= 1
+      ) {
         return true
       } else {
         // cozy-konnector-libs has its own logging function which format these logs with colors in
         // standalone and dev mode and as JSON in production mode
-        log('error','impossible de trouver le lien deconnecter')
+        log('error', 'impossible de trouver le lien deconnecter')
         return false
       }
     }
@@ -82,16 +85,29 @@ function authenticate(username, password) {
 function parseDocuments($) {
   // you can find documentation about the scrape function here :
   // https://github.com/konnectors/libs/blob/master/packages/cozy-konnector-libs/docs/api.md#scrape
-  sNumFacture =  $('div.flexrow').find($('div.control')).eq(0).text().trim();
-  sMontant =  $('div.flexrow').find($('div.control')).eq(1).text().trim();
-  sDate =  $('div.flexrow').find($('div.control')).eq(2).text().trim();
-  sLien = baseUrl + '/' +  $('#Content_rptDerniereFacture_HyperLink1_0').attr('href');
+  var sNumFacture = $('div.flexrow')
+    .find($('div.control'))
+    .eq(0)
+    .text()
+    .trim()
+  var sMontant = $('div.flexrow')
+    .find($('div.control'))
+    .eq(1)
+    .text()
+    .trim()
+  var sDate = $('div.flexrow')
+    .find($('div.control'))
+    .eq(2)
+    .text()
+    .trim()
+  var sLien =
+    baseUrl + '/' + $('#Content_rptDerniereFacture_HyperLink1_0').attr('href')
 
-//  log('info','Facture en cours ' + sNumFacture);
-//  log('info','Facture en cours ' + normalizePrice(sMontant));
-//  log('info','Facture en cours ' + sDate);
-//  log('info','Facture en cours ' + sLien);
-  var docs =[];
+  //  log('info','Facture en cours ' + sNumFacture);
+  //  log('info','Facture en cours ' + normalizePrice(sMontant));
+  //  log('info','Facture en cours ' + sDate);
+  //  log('info','Facture en cours ' + sLien);
+  var docs = []
   docs = scrape(
     $,
     {
@@ -108,21 +124,29 @@ function parseDocuments($) {
         parse: href => `${baseUrl}/${href}`
       },
       date: {
-        sel: 'td:nth-child(3)',
+        sel: 'td:nth-child(3)'
       }
     },
     '.footable tbody tr'
-  );
+  )
 
-  docs.push({billNumber:sNumFacture,amount:normalizePrice(sMontant),fileurl:sLien,date:sDate});
+  docs.push({
+    billNumber: sNumFacture,
+    amount: normalizePrice(sMontant),
+    fileurl: sLien,
+    date: sDate
+  })
 
-  log ('info',docs.length);
+  log('info', docs.length)
   return docs.map(doc => ({
     ...doc,
     fileurl: doc.fileurl,
-    filename: `${formatDate(normalizeDate(doc.date))}_saur_${parseFloat(doc.amount).toFixed(2)}€_`
-      + `${doc.billNumber}`
-      + '.pdf',
+    filename:
+      `${formatDate(normalizeDate(doc.date))}_saur_${parseFloat(
+        doc.amount
+      ).toFixed(2)}Eur_` +
+      `${doc.billNumber}` +
+      '.pdf',
     // the saveBills function needs a date field
     date: normalizeDate(doc.date),
     currency: '€',
@@ -140,10 +164,10 @@ function parseDocuments($) {
 
 // convert a price string to a float
 function normalizePrice(price) {
-  price = price.replace(new RegExp(' ', 'g'),'');
-  price = price.replace(new RegExp(',', 'g'),'.');
+  price = price.replace(new RegExp(' ', 'g'), '')
+  price = price.replace(new RegExp(',', 'g'), '.')
 
-  price = price.trim();
+  price = price.trim()
   return parseFloat(price)
 }
 
@@ -155,7 +179,6 @@ function normalizeDate(date) {
 
 // Convert a Date object to a ISO date string
 function formatDate(date) {
-  console.log(date)
   let year = date.getFullYear()
   let month = date.getMonth() + 1
   let day = date.getDate()
