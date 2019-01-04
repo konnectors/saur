@@ -4,7 +4,7 @@
   "type": "konnector",
   "language": "node",
   "icon": "icon.png",
-  "slug": "SAUR",
+  "slug": "saur",
   "source": "git://github.com/konnectors/saur",
   "editor": "Marc POLYCARPE",
   "vendor_link": "https://www.saurclient.fr/",
@@ -43,7 +43,7 @@
     }
   },
   "developer": {
-    "name": "Cozy Cloud",
+    "name": "Marc POLYCARPE",
     "url": "https://cozy.io"
   },
   "langs": ["fr", "en"],
