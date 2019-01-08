@@ -1,6 +1,6 @@
 {
-  "version": "1.1.0",
-  "name": "Connector SAUR",
+  "version": "1.0.2",
+  "name": "SAUR",
   "type": "konnector",
   "language": "node",
   "icon": "icon.png",
@@ -9,7 +9,7 @@
   "editor": "Marc POLYCARPE",
   "vendor_link": "https://www.saurclient.fr/",
   "categories": [
-    "Energy"
+    "energy"
   ],
   "fields": {
     "login": {
@@ -56,8 +56,8 @@
   ],
   "locales": {
     "fr": {
-      "short_description": "Connecteur pour la SAUR (Eau)",
-      "long_description": "Ce connecteur récupère les factures d'eau de la SAUR",
+      "short_description": "Récupère vos factures SAUR (Eau)",
+      "long_description": "Récupère vos factures de consommation d'eau chez SAUR",
       "permissions": {
         "bank operations": {
           "description": "Utilisé pour relier les factures à des operations bancaires"
@@ -74,8 +74,8 @@
       }
     },
     "en": {
-      "short_description": "SAUR Connector",
-      "long_description": "This template fetches bills from SAUR (water provider in France)",
+      "short_description": "Fetch your SAUR bills",
+      "long_description": "Fetch your water bills from SAUR",
       "permissions": {
         "bank operations": {
           "description": "Required to link bank operations to bills"
