@@ -6,7 +6,7 @@
   "icon": "icon.png",
   "slug": "saur",
   "source": "git://github.com/konnectors/saur",
-  "editor": "Marc POLYCARPE",
+  "editor": "Marc Polycarpe",
   "vendor_link": "https://www.saurclient.fr/",
   "categories": [
     "energy"
@@ -47,7 +47,7 @@
     }
   },
   "developer": {
-    "name": "Marc POLYCARPE",
+    "name": "Marc Polycarpe",
     "url": "https://cozy.io"
   },
   "langs": [
