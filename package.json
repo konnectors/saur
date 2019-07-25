@@ -1,6 +1,6 @@
 {
   "name": "cozy-konnector-saur",
-  "version": "1.1.0",
+  "version": "1.0.5",
   "description": "",
   "repository": {
     "type": "git",
@@ -29,25 +29,25 @@
     "build": "webpack",
     "precommit": "yarn lint",
     "lint": "eslint --fix .",
-    "deploy": "git-directory-deploy --directory build/ --branch ${DEPLOY_BRANCH:-build} --repo=${DEPLOY_REPOSITORY:-git@github.com:konnectors/saur}",
+    "deploy": "git-directory-deploy --directory build/ --branch ${DEPLOY_BRANCH:-build} --repo=${DEPLOY_REPOSITORY:-https://$GITHUB_TOKEN@github.com/konnectors/saur}",
     "cozyPublish": "cozy-app-publish --token $REGISTRY_TOKEN --build-commit $(git rev-parse ${DEPLOY_BRANCH:-build})",
     "travisDeployKey": "./bin/generate_travis_deploy_key"
   },
   "dependencies": {
-    "cozy-konnector-libs": "4.18.3"
+    "cozy-konnector-libs": "4.12.1"
   },
   "devDependencies": {
-    "copy-webpack-plugin": "5.0.3",
-    "cozy-app-publish": "0.16.4",
-    "cozy-jobs-cli": "1.8.25",
-    "eslint": "5.16.0",
-    "eslint-config-cozy-app": "1.2.0",
-    "eslint-plugin-prettier": "3.1.0",
+    "copy-webpack-plugin": "4.6.0",
+    "cozy-app-publish": "0.9.1",
+    "cozy-jobs-cli": "1.6.1",
+    "eslint": "5.11.0",
+    "eslint-config-cozy-app": "1.1.5",
+    "eslint-plugin-prettier": "^3.0.0",
     "git-directory-deploy": "1.5.1",
-    "husky": "2.7.0",
-    "konitor": "0.10.2",
-    "svgo": "1.3.0",
-    "webpack": "4.37.0",
-    "webpack-cli": "3.3.6"
+    "husky": "1.3.0",
+    "konitor": "0.10.1",
+    "svgo": "1.1.1",
+    "webpack": "4.28.2",
+    "webpack-cli": "3.1.2"
   }
 }
