@@ -1,11 +1,9 @@
 language: node_js
 node_js:
-- '8'
+- '12'
 env:
   global:
-  - GH_USER_EMAIL="travis@example.org"
-  - GH_USER_NAME="cozy-bot"
-  - DEPLOY_REPOSITORY="git@github.com:konnectors/saur.git"
+  # REGISTRY_TOKEN(editor=cozy, app=saur)
   - secure: ZVQg4vRJx9Cs0d8yndE1BsNv+g9dzAR5TTph+i9npHP0BPjsExLFro5EJqnbDwp/CSlnP//GFPwxhhMWOtyrKx3oSFM2JF2ejw3xgA9sW1YGzxxjArPUvCjgUgJq+6ozWTtFsg0oWKi0UFkOMZ2gRkr199sODjLGGxXNF5i3CHZUjC0WW9Y3WwwbqZDkCSlc1XhqGhjboeoG+OGSSwfdYolJtHKW53xxDJwNbgkZ9sqFwGQfHm2zoD9Rlx35GrBMpG0jkhbt0nw19RTEnp8+zaDt+ndhIFKNOtDbubAkZ+H0XXd0Ct4oHJhCErk7LYyWGkPEBTEhRlmDPVv8UatbaJiqmfUjKlMBTtbW0DzcSK9jYS39xcAkcb0lokCOE0G1+0uhcKDCKszVehH//2S/fL8uptemS2hDwAprHmqngNhHWOwulKhqxNDd93dhCD6Ier2MxOStponYTnLItwz6u+9FF5K5DitVZiRRxqJcV1bs0dvFnJKPl8x9EV4YGBlJvOKpjHf2IvUzOaDEVQbg0Pyc6GFu27hhDdxkhJV3CkOMTFWav6FNPxQujpXAq170ZRpue6Z671XUSov/tHLtg5sJRP55IO9pZcjTRozNyftgE1fOK6wrS80s6KTT2Cj9AsZYfnSIMCX27qpnMJaNLw2FcAaGcapDFGBGyPnakiw=
 cache:
   yarn: true
@@ -18,7 +16,6 @@ branches:
 script:
 - yarn lint
 - yarn build
-- yarn run check
 deploy:
 - provider: script
   skip-cleanup: true
