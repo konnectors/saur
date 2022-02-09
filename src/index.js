@@ -6,7 +6,8 @@ const {
   BaseKonnector,
   requestFactory,
   saveBills,
-  log
+  log,
+  errors
 } = require('cozy-konnector-libs')
 const stream = require('stream')
 
@@ -31,7 +32,14 @@ class SaurKonnector extends BaseKonnector {
     this.fields = fields
 
     log('info', 'Authenticating ...')
-    await this.authenticate.bind(this)(fields.login, fields.password)
+    try {
+      await this.authenticate.bind(this)(fields.login, fields.password)
+    } catch (err) {
+      if (err.statusCode === 401) {
+        log('error', err.message)
+        throw new Error(errors.LOGIN_FAILED)
+      } else throw err
+    }
 
     log('info', 'Successfully logged in')
     // The BaseKonnector instance expects a Promise as return of the function
@@ -70,7 +78,7 @@ class SaurKonnector extends BaseKonnector {
     // et donc pouvoir modifier les membres
     await this.request(
       options,
-      function(error, response, body) {
+      function (error, response, body) {
         if (!error && response.statusCode == 200) {
           // Sauvegarde des informations nécessaires
           // Le token d'identification
@@ -103,7 +111,7 @@ class SaurKonnector extends BaseKonnector {
 
     // Démarre la requête
     var listeFactures
-    await this.request(options, function(error, response, body) {
+    await this.request(options, function (error, response, body) {
       if (!error && response.statusCode == 200) {
         listeFactures = []
       }
