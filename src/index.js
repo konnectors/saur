@@ -80,7 +80,7 @@ class SaurKonnector extends BaseKonnector {
     // et donc pouvoir modifier les membres
     await this.request(
       options,
-      function(error, response, body) {
+      function (error, response, body) {
         if (!error && response.statusCode == 200) {
           // Sauvegarde des informations nécessaires
           // Le token d'identification
@@ -113,7 +113,7 @@ class SaurKonnector extends BaseKonnector {
 
     // Démarre la requête
     var listeFactures
-    await this.request(options, function(error, response, body) {
+    await this.request(options, function (error, response, body) {
       if (!error && response.statusCode == 200) {
         listeFactures = []
       }
