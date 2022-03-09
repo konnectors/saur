@@ -1,11 +1,11 @@
 {
-  "version": "1.2.2",
+  "version": "1.2.3",
   "name": "SAUR",
   "type": "konnector",
   "language": "node",
   "icon": "icon.svg",
   "slug": "saur",
-  "source": "git://github.com/konnectors/saur",
+  "source": "git@github.com:konnectors/saur.git",
   "editor": "Marc Polycarpe",
   "vendor_link": "https://www.saurclient.fr/",
   "categories": [
