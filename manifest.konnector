@@ -5,7 +5,7 @@
   "language": "node",
   "icon": "icon.svg",
   "slug": "saur",
-  "source": "git@github.com:konnectors/saur.git",
+  "source": "git://github.com/konnectors/saur",
   "editor": "Marc Polycarpe",
   "vendor_link": "https://www.saurclient.fr/",
   "categories": [
@@ -92,6 +92,13 @@
       }
     }
   },
+  "qualification_labels": [
+    "water_invoice"
+  ],
+  "features": [
+    "DOC_QUALIFICATION_V2",
+    "SENTRY_V2"
+  ],
   "banksTransactionRegExp": "\\bsaur\\b",
   "manifest_version": "2"
 }
