@@ -1,17 +1,20 @@
 process.env.SENTRY_DSN =
   process.env.SENTRY_DSN ||
-  'https://e5a5de00a5b944a9a273dc0ca0d91468@sentry.cozycloud.cc/106'
+  'https://9e279af1ba4646689d7d86d7e048304c@errors.cozycloud.cc/54'
 
 const {
   BaseKonnector,
   requestFactory,
   saveBills,
+  cozyClient,
   log,
   errors
 } = require('cozy-konnector-libs')
 const stream = require('stream')
 
 const urlAccounts = 'https://apib2c.azure.saurclient.fr/admin/auth'
+const models = cozyClient.new.models
+const { Qualification } = models.document
 
 class SaurKonnector extends BaseKonnector {
   constructor() {
@@ -80,7 +83,7 @@ class SaurKonnector extends BaseKonnector {
     // et donc pouvoir modifier les membres
     await this.request(
       options,
-      function (error, response, body) {
+      function(error, response, body) {
         if (!error && response.statusCode == 200) {
           // Sauvegarde des informations nécessaires
           // Le token d'identification
@@ -113,7 +116,7 @@ class SaurKonnector extends BaseKonnector {
 
     // Démarre la requête
     var listeFactures
-    await this.request(options, function (error, response, body) {
+    await this.request(options, function(error, response, body) {
       if (!error && response.statusCode == 200) {
         listeFactures = []
       }
@@ -182,6 +185,11 @@ class SaurKonnector extends BaseKonnector {
         importDate: new Date(),
         // document version, useful for migration after change of document structure
         version: 1
+      },
+      fileAttributes: {
+        metadata: {
+          qualification: Qualification.getByLabel('water_invoice')
+        }
       }
     }))
   }
