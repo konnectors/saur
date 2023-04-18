@@ -61,7 +61,11 @@ class SaurKonnector extends BaseKonnector {
       // this is a bank identifier which will be used to link bills to bank operations. These
       // identifiers should be at least a word found in the title of a bank operation related to this
       // bill. It is not case sensitive.
-      identifiers: ['saur']
+      contentType: 'application/pdf',
+      identifiers: ['saur'],
+      fileIdAttributes: ['filename'],
+      sourceAccount: fields.login,
+      sourceAccountIdentifier: fields.login
     })
   }
 
@@ -83,7 +87,7 @@ class SaurKonnector extends BaseKonnector {
     // et donc pouvoir modifier les membres
     await this.request(
       options,
-      function(error, response, body) {
+      function (error, response, body) {
         if (!error && response.statusCode == 200) {
           // Sauvegarde des informations nécessaires
           // Le token d'identification
@@ -116,7 +120,7 @@ class SaurKonnector extends BaseKonnector {
 
     // Démarre la requête
     var listeFactures
-    await this.request(options, function(error, response, body) {
+    await this.request(options, function (error, response, body) {
       if (!error && response.statusCode == 200) {
         listeFactures = []
       }
@@ -188,7 +192,12 @@ class SaurKonnector extends BaseKonnector {
       },
       fileAttributes: {
         metadata: {
-          qualification: Qualification.getByLabel('water_invoice')
+          qualification: Qualification.getByLabel('water_invoice'),
+          carbonCopy: true,
+          contentAuthor: 'saurclient.fr',
+          issueDate: new Date(),
+          datetime: new Date(doc.date),
+          datetimeLabel: 'issueDate'
         }
       }
     }))
